@@ -1,0 +1,98 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.ashishmahale</groupId>
+	<artifactId>WeatherClient</artifactId>
+	<packaging>jar</packaging>
+	<version>1</version>
+	<name>WeatherClient</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<jdk.version>1.5</jdk.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.xml.ws</groupId>
+			<artifactId>jaxws-tools</artifactId>
+			<version>2.2.1</version>
+		</dependency>
+	</dependencies>
+	<build>
+
+		<finalName>WeatherClient</finalName>
+
+		<plugins>
+
+			<!-- Eclipse project -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<!-- Always download and attach dependencies source code -->
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>false</downloadJavadocs>
+					<!-- Avoid type mvn eclipse:eclipse -Dwtpversion=2.0 -->
+					<!-- <wtpversion>2.0</wtpversion> -->
+				</configuration>
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxws-maven-plugin</artifactId>
+				<version>1.12</version>
+				<executions>
+					<execution>
+						<id>wsimport-from-jdk</id>
+						<goals>
+							<goal>wsimport</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!-- using wsdl from an url -->
+					 <wsdlUrls> 
+					 <wsdlUrl>http://wsf.cdyne.com/WeatherWS/Weather.asmx?WSDL</wsdlUrl> 
+					 </wsdlUrls> 
+
+					<!-- or using wsdls file directory -->
+<!-- 					<wsdlDirectory>src/main/resources</wsdlDirectory>
+					which wsdl file
+					<wsdlFiles>
+						<wsdlFile>Weather.wsdl</wsdlFile>
+					</wsdlFiles> -->
+					<!-- Keep generated files -->
+					<keep>true</keep>
+					<!-- Package name -->
+					<packageName>com.ashishmahale.api.weatherClient</packageName>
+					<!-- generated source files destination -->
+					<sourceDestDir>src/main/java</sourceDestDir>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+	</build>
+
+</project>
